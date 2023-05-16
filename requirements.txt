@@ -1,0 +1,4 @@
+sounddevice
+wavio
+openai
+scipy
