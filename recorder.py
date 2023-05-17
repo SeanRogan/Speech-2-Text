@@ -6,12 +6,12 @@ import logging
 
 freq = 44100
 duration = 4  # in seconds
-recordings_dir = './recordings'  # Create the recordings directory if it doesn't exist
+recordings_dir = './recordings'
 logging.basicConfig(level=logging.DEBUG, filename='log.txt')
 
 
 if not os.path.exists(recordings_dir):
-    os.makedirs(recordings_dir)
+    os.makedirs(recordings_dir)  # Create the recordings directory if it doesn't exist
 print('Recording')
 while True:
     ts = datetime.datetime.now()  # create a timestamp to assign to audio files as they're made
