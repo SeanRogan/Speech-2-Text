@@ -6,7 +6,7 @@ and the transcripts will be printed to the console. Future versions will work by
 
 ## Requirements:
 
-We are using the openai API for transcription. You will need an openai API key stored in file called constants.py,
+We are using the openai API for transcription. You will need an openai API key stored in a file called constants.py,
 in the same home directory where recorder.py and scribe.py are located. example:
 ```
 OPENAI_API_KEY = 'sk-ztiVKBxadjskjlkasjkldj238108154dsfsafsadf768iZPDc5O'

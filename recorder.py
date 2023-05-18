@@ -6,7 +6,7 @@ import logging
 import time
 import argparse
 
-logging.basicConfig(level=logging.DEBUG, filename='log.txt')
+logging.basicConfig(level=logging.DEBUG, filename='recorder_log.txt')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--Directory', type=str, required=False, help='Configure the directory to which recordings are saved. Takes a string representing the file path where audio files are to be saved.')

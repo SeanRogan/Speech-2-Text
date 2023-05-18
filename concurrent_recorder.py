@@ -7,7 +7,7 @@ import concurrent.futures
 import time
 import argparse
 
-logging.basicConfig(level=logging.DEBUG, filename='recorder_log.txt')
+logging.basicConfig(level=logging.DEBUG, filename='c_recorder_log.txt')
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--Directory', type=str, required=False, help='Configure the directory to which recordings are saved. Takes a string representing the file path where audio files are to be saved.')
 parser.add_argument('-s', '--Seconds', type=int, required =False, help='Configure the recording time, in seconds. Takes an integer, representing the length of recording interval. An argument of 7 will record a series of wav files 7 seconds long, until the script is stopped. Default setting is 5 seconds.')

@@ -8,12 +8,13 @@ import concurrent.futures
 
 
 # This script will work, but I have yet to determine if there is any noticeable performance benefit from using the concurrent version.
-logging.basicConfig(level=logging.DEBUG, filename='log.txt')
+logging.basicConfig(level=logging.DEBUG, filename='c_log.txt')
 last_processed_time = 0  # last processed file timestamp
 transcribed_files = []  # list to hold files already transcribed to avoid duplicate api calls
 
 
 def transcribe(path):
+    ts_start = time.process_time()
     logging.debug('transcribe proc started' + str(time.perf_counter()))
     with open(path, 'rb') as file:
         logging.debug('file opened' + str(time.perf_counter()))
@@ -28,10 +29,14 @@ def transcribe(path):
     with open('transcription.txt', 'a') as f:
         f.write(api_call_result.text)
         # record file timestamp as new last_processed_file
+    ts_end = time.perf_counter()
+    ts_rt = str(ts_end - ts_start)
+    logging.info('transcribe proc runtime was: ' + ts_rt)
 
 
 while True:
     with concurrent.futures.ThreadPoolExecutor() as executor:
+        start = time.perf_counter()
         files = glob.glob("./recordings/*")  # files are in the recordings dir
         unprocessed_files = [f for f in files if os.path.getctime(f) > last_processed_time]  # unprocessed_files are any with a timestamp more recent than the last_processed_file's timestamp
         if not unprocessed_files:
@@ -49,3 +54,7 @@ while True:
             result = future.result()  # thread returns file path to be recorded once processing is finished
             transcribed_files.append(result)
             last_processed_time = os.path.getctime(latest)
+        end = time.perf_counter()
+        rt = str(end - start)
+        logging.info('main loop runtime was: ' + rt)
+

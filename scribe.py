@@ -7,11 +7,11 @@ import constants
 import logging
 
 logging.basicConfig(level=logging.DEBUG, filename='log.txt')
-start = datetime.datetime.now()     # timestamp for perf testing
 last_processed_time = 0     # last processed file timestamp
 transcribed = []        # list to hold files already transcribed to avoid duplicate api calls
 
 while True:
+    start = time.perf_counter()  # timestamp for perf testing
     files = glob.glob("./recordings/*")     # files are in the recordings dir
     unprocessed_files = [f for f in files if os.path.getctime(f) > last_processed_time]    # unprocessed_files are any with a timestamp more recent than the last_processed_file's timestamp
     if not unprocessed_files:
@@ -35,16 +35,16 @@ while True:
         # todo handler service to deal with results of api call
 
         # record end-time time stamp, prints api call delay time for testing/eval
-        end = datetime.datetime.now()
+        end = time.perf_counter()
         runtime = end - start
-        logging.debug('runtime for scribe loop was : ' + str(runtime))
+        logging.info('runtime for scribe loop was : ' + str(runtime))
         # append text to transcript file
-        trans_ts_start = datetime.datetime.now()
+        trans_ts_start = time.perf_counter()
         with open('transcription.txt', 'a') as f:
             f.write(result.text)
         transcribed.append(latest)
-        trans_ts_end = datetime.datetime.now()
+        trans_ts_end = time.perf_counter()
         transcribed_time = trans_ts_end - trans_ts_start
-        logging.debug('transcription took :' + str(transcribed_time))
+        logging.info('transcription took :' + str(transcribed_time))
         # save list of transcribed recordings so that we don't transcribe the same one again
     last_processed_time = os.path.getctime(latest)          # record file timestamp as new last_processed_file
